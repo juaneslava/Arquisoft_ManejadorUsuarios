@@ -29,7 +29,7 @@ def crear_usuario(request):
 
             user = User.objects.create_user(data['usuario'], data['correo'], data['contrasenia'])
             user.first_name = data['rol']; 
-            user.last_name = institucion.id; 
+            user.last_name = institucion.nombre; 
             user.save()
             
             return JsonResponse({"mensaje": "Usuario creado con exito", "usuario_id": usuario.id}, status=201)
