@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from .models import Usuario, Institucion
+from django.contrib.auth.models import User
 import json
 
 @csrf_exempt
@@ -23,9 +24,14 @@ def crear_usuario(request):
                 nombre=data['nombre'],
                 contrasenia=data['contrasenia'],
                 rol=data['rol'],
-                institucion=institucion
+                institucion= institucion
             )
 
+            user = User.objects.create_user(data['usuario'], data['correo'], data['contrasenia'])
+            user.first_name = data['nombre']; 
+            user.last_name = institucion.id; 
+            user.save()
+            
             return JsonResponse({"mensaje": "Usuario creado con exito", "usuario_id": usuario.id}, status=201)
         except Exception as e:
             return JsonResponse({"error": str(e)}, status=400)
