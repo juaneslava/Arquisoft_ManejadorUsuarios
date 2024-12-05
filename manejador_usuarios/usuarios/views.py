@@ -28,7 +28,7 @@ def crear_usuario(request):
             )
 
             user = User.objects.create_user(data['usuario'], data['correo'], data['contrasenia'])
-            user.first_name = data['nombre']; 
+            user.first_name = data['rol']; 
             user.last_name = institucion.id; 
             user.save()
             
